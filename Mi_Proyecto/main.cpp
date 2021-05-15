@@ -8,17 +8,19 @@ void bienvenida();
 void leer(string mensaje, int &valor);
 void cargarVueltas(int &vueltasCargadas);
 void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas);
-void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vueltaRapida);
-void menu(int &vueltasCargadas, int duracionVuelta[], int &vueltaRapida);
+void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &tiempoVueltaRapida);
+void calcularVueltaLenta(int duracionVuelta[], int vueltasCargadas, int &tiempoVueltaLenta);
+void menu(int &vueltasCargadas, int duracionVuelta[], int &tiempoVueltaRapida, int &tiempoVueltaLenta);
 #pragma endregion
 
 int main()
 {
     int vueltasCargadas = 0;
     int duracionVuelta[NUM_VUELTAS] = {0};
-    int vueltaRapida = 0;
+    int tiempoVueltaRapida = 0;
+    int tiempoVueltaLenta = 0;
 
-    menu(vueltasCargadas, duracionVuelta, vueltaRapida);
+    menu(vueltasCargadas, duracionVuelta, tiempoVueltaRapida, tiempoVueltaLenta);
 
     cout << vueltasCargadas << endl;
 
@@ -27,7 +29,7 @@ int main()
         cout << duracionVuelta[i] << endl;
     }
 
-    cout << "Vuelta rapida: " << vueltaRapida << endl;
+    cout << "Vuelta rapida: " << tiempoVueltaRapida << endl;
 
     return 0;
 }
@@ -35,14 +37,14 @@ int main()
 #pragma region Funciones
 void leer(string mensaje, int &valor)
 {
-    cout << mensaje << endl;
+    cout << mensaje;
     cin >> valor;
 }
 
 void cargarVueltas(int &vueltasCargadas)
 {
     cout << endl;
-    leer("Ingrese el numero de vueltas", vueltasCargadas);
+    leer("Ingrese el numero de vueltas: ", vueltasCargadas);
 }
 
 void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas)
@@ -52,7 +54,7 @@ void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas)
         cout << endl;
         for (int i = 0; i < vueltasCargadas; i++)
         {
-            cout << "Ingrese la duracion de la vuelta numero " << i + 1 << endl;
+            cout << "Ingrese la duracion de la vuelta numero " << i + 1 << ": ";
             cin >> duracionVuelta[i];
         }
     }
@@ -63,19 +65,46 @@ void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas)
     }
 }
 
-void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vueltaRapida)
+void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &tiempoVueltaRapida)
 {
+    int nroVueltaRapida = 0;
+
     if (vueltasCargadas > 0)
     {
-        vueltaRapida = duracionVuelta[0];
+        tiempoVueltaRapida = duracionVuelta[0];
         for (int i = 0; i < vueltasCargadas; i++)
         {
-            if (duracionVuelta[i] > vueltaRapida)
+            if (duracionVuelta[i] > tiempoVueltaRapida)
             {
-                vueltaRapida = duracionVuelta[i];
+                tiempoVueltaRapida = duracionVuelta[i];
+                nroVueltaRapida = i + 1;
             }
         }
-        cout << "La vuelta mas rapida fue de " << vueltaRapida << endl;
+        cout << "La vuelta mas rapida fue la Nro " << nroVueltaRapida << " con un tiempo de " << tiempoVueltaRapida << endl;
+    }
+    else
+    {
+        cout << endl;
+        cout << "No hay vueltas ingresadas" << endl;
+    }
+}
+
+void calcularVueltaLenta(int duracionVuelta[], int vueltasCargadas, int &tiempoVueltaLenta)
+{
+    int nroVueltaLenta = 0;
+
+    if (vueltasCargadas > 0)
+    {
+        tiempoVueltaLenta = duracionVuelta[0];
+        for (int i = 0; i < vueltasCargadas; i++)
+        {
+            if (duracionVuelta[i] < tiempoVueltaLenta)
+            {
+                tiempoVueltaLenta = duracionVuelta[i];
+                nroVueltaLenta = i + 1;
+            }
+        }
+        cout << "La vuelta mas lenta fue la Nro " << nroVueltaLenta << " con un tiempo de " << tiempoVueltaLenta << endl;
     }
     else
     {
@@ -97,7 +126,7 @@ void bienvenida()
     cout << endl;
 }
 
-void menu(int &vueltasCargadas, int duracionVuelta[], int &vueltaRapida)
+void menu(int &vueltasCargadas, int duracionVuelta[], int &tiempoVueltaRapida, int &tiempoVueltaLenta)
 {
     int opcion;
 
@@ -112,7 +141,8 @@ void menu(int &vueltasCargadas, int duracionVuelta[], int &vueltaRapida)
             cout << "| 1. Cargar vueltas             |" << endl;
             cout << "| 2. Ingresar datos de vueltas  |" << endl;
             cout << "| 3. Calcular vuelta mas rapida |" << endl;
-            cout << "| 4. Salir                      |" << endl;
+            cout << "| 4. Calcular vuelta mas leta   |" << endl;
+            cout << "| 5. Salir                      |" << endl;
             cout << "\\-------------------------------/" << endl;
             cout << "Ingrese la opcion: ";
             cin >> opcion;
@@ -127,12 +157,17 @@ void menu(int &vueltasCargadas, int duracionVuelta[], int &vueltaRapida)
             cargarDatosVueltas(duracionVuelta, vueltasCargadas);
             break;
         case 3:
-            calcularVueltaRapida(duracionVuelta, vueltasCargadas, vueltaRapida);
+            calcularVueltaRapida(duracionVuelta, vueltasCargadas, tiempoVueltaRapida);
             break;
         case 4:
-            cout << "Que tenga un buen dia" << endl;
+            calcularVueltaLenta(duracionVuelta, vueltasCargadas, tiempoVueltaLenta);
+            break;
+        case 5:
+            cout << endl;
+            cout << "Que tenga un buen dia!" << endl;
+            system("PAUSE");
             break;
         }
-    } while (opcion != 4);
+    } while (opcion != 5);
 }
 #pragma endregion
