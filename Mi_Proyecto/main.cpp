@@ -135,7 +135,7 @@ void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vuelta
     else
     {
         cout << endl;
-        cout << "No hay vueltas ingresadas" << endl;
+        cout << "No hay vueltas ingresadas." << endl;
     }
 }
 
@@ -168,7 +168,7 @@ void menu(int &vueltasCargadas, int duracionVuelta[], int &vueltaRapida, float &
         cout << "| 4. Calcular vuelta mas lenta    |" << endl;
         cout << "| 5. Calcular velocidad media     |" << endl;
         cout << "| 0. Salir                        |" << endl;
-        cout << "\\---------------------------------/" << endl;
+        cout << "\\--------------------------------/" << endl;
         cout << "Ingrese la opcion: ";
         cin >> opcion;
 
