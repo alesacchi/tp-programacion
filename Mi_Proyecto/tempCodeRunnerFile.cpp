@@ -1,0 +1,1 @@
+t << minutosRapida << endl;
