@@ -130,7 +130,7 @@ void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vuelta
                 posicionVueltaRapida = i;
             }
         }
-        cout << "La vuelta mas rapida fue la " << obtenerPosicion(posicionVueltaRapida) << " y tuvo una duracion de " << minSegVueltas[posicionVueltaRapida][0] << ":" << minSegVueltas[posicionVueltaRapida][1] << endl;
+        cout << "La vuelta mas rapida fue la " << obtenerPosicion(posicionVueltaRapida) << " y tuvo una duracion de " << minSegVueltas[posicionVueltaRapida][0] << " minutos y " << minSegVueltas[posicionVueltaRapida][1] << " segundos." << endl;
     }
     else
     {
@@ -146,7 +146,7 @@ void bienvenida()
     cout << "*******                                                                                        *******" << endl;
     cout << "**** TSS - Laboratorio de Programacion I                                                          ****" << endl;
     cout << "**** Trabajo Practico - Ciclista                                                                  ****" << endl;
-    cout << "****                               Karen Kunz, Nahuel Medici, Facundo Minicucci, Alejandro Sacchi ****" << endl;
+    cout << "****                               Karen Kunz, Nahuel Medice, Facundo Minicucci, Alejandro Sacchi ****" << endl;
     cout << "*******                                                                                        *******" << endl;
     cout << "******************************************************************************************************" << endl;
     cout << endl;
@@ -168,7 +168,7 @@ void menu(int &vueltasCargadas, int duracionVuelta[], int &vueltaRapida, float &
         cout << "| 4. Calcular vuelta mas lenta    |" << endl;
         cout << "| 5. Calcular velocidad media     |" << endl;
         cout << "| 0. Salir                        |" << endl;
-        cout << "\\--------------------------------/" << endl;
+        cout << "\\---------------------------------/" << endl;
         cout << "Ingrese la opcion: ";
         cin >> opcion;
 
@@ -215,7 +215,7 @@ void calcularVueltaLenta(int duracionVuelta[], int vueltasCargadas, int minSegVu
                 posicionVueltaLenta = i;
             }
         }
-        cout << "La vuelta mas lenta fue la " << obtenerPosicion(posicionVueltaLenta) << " y tuvo una duracion de " << minSegVueltas[posicionVueltaLenta][0] << ":" << minSegVueltas[posicionVueltaLenta][1] << endl;
+        cout << "La vuelta mas lenta fue la " << obtenerPosicion(posicionVueltaLenta) << " y tuvo una duracion de " << minSegVueltas[posicionVueltaLenta][0] << " minutos y " << minSegVueltas[posicionVueltaLenta][1] << " segundos." << endl;
     }
     else
     {
@@ -239,7 +239,7 @@ void calcularVelocidadMedia(int vueltaRapida, int vueltaLenta, float kilometrosV
 
         float velocidadMedia = metros / (tiempoLenta - tiempoRapida);
 
-        cout << "La velocidad media fue de " << velocidadMedia << " m/s" << endl;
+        cout << "La velocidad media fue de " << velocidadMedia << " m/s." << endl;
     }
     else
     {
