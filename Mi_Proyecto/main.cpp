@@ -84,10 +84,16 @@ string obtenerPosicion(int vuelta)
 void cargarVueltas(int &vueltasCargadas, float &kilometrosVuelta)
 {
     cout << endl;
-    // TODO: permite cargar vueltas negativas
-    leer("Ingrese el numero de vueltas: ", vueltasCargadas);
-    // TODO: que no permita cargar 0 km o nros negativos
-    leer("Ingrese los kilometros de la vuelta: ", kilometrosVuelta);
+    do
+    {
+        leer("Ingrese el numero de vueltas: ", vueltasCargadas);
+    } while (vueltasCargadas < 1);
+
+    do
+    {
+        leer("Ingrese los kilometros de la vuelta: ", kilometrosVuelta);
+    } while (kilometrosVuelta < 1);
+
     cout << "Se han cargado " << vueltasCargadas << " vueltas de " << kilometrosVuelta << "km." << endl;
 }
 
