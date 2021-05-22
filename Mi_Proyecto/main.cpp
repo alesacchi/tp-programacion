@@ -4,17 +4,17 @@ using namespace std;
 #define NUM_VUELTAS 20
 
 #pragma region FirmaFunciones
-void bienvenida();
+void imprimirBienvenida();
+void imprimirMenu();
 void leer(string mensaje, int &valor);
 void leer(string mensaje, float &valor);
 void convertirTiempo(int minSegVuelta[][2], int vueltasCargadas, int duracionVuelta[]);
 string obtenerPosicion(int vuelta);
 void cargarVueltas(int &vueltasCargadas, float &kilometrosVuelta);
-void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], bool datosCargados);
-void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vueltaRapida, int minSegVueltas[][2], bool datosCargados);
-void calcularVueltaLenta(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], int &vueltaLenta, bool datosCargados);
+void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], bool &datosCargados);
+void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vueltaRapida, int minSegVueltas[][2], bool &datosCargados);
+void calcularVueltaLenta(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], int &vueltaLenta, bool &datosCargados);
 void calcularVelocidadMedia(int vueltaRapida, int vueltaLenta, float kilometrosVuelta);
-void menu(int &vueltasCargadas, int duracionVuelta[], int &vueltaRapida, float &kilometrosVuelta, int minSegVueltas[][2], int &vueltaLenta);
 #pragma endregion
 
 int main()
@@ -25,8 +25,45 @@ int main()
     int vueltaRapida = 0;
     int vueltaLenta = 0;
     int minSegVuelta[NUM_VUELTAS][2] = {0};
+    int opcion;
+    bool datosCargados = false;
 
-    menu(vueltasCargadas, duracionVuelta, vueltaRapida, kilometrosVuelta, minSegVuelta, vueltaLenta);
+    imprimirBienvenida();
+
+    do
+    {
+        imprimirMenu();
+
+        cin >> opcion;
+
+        switch (opcion)
+        {
+        case 1:
+            cargarVueltas(vueltasCargadas, kilometrosVuelta);
+            break;
+        case 2:
+            cargarDatosVueltas(duracionVuelta, vueltasCargadas, minSegVuelta, datosCargados);
+            break;
+        case 3:
+            calcularVueltaRapida(duracionVuelta, vueltasCargadas, vueltaRapida, minSegVuelta, datosCargados);
+            break;
+        case 4:
+            calcularVueltaLenta(duracionVuelta, vueltasCargadas, minSegVuelta, vueltaLenta, datosCargados);
+            break;
+        case 5:
+            calcularVelocidadMedia(vueltaRapida, vueltaLenta, kilometrosVuelta);
+            break;
+        case 0:
+            cout << endl;
+            cout << "Que tenga un buen dia!" << endl;
+            system("PAUSE");
+            cout << endl;
+            break;
+        default:
+            cout << "Opcion incorrecta. Ingrese una opcion valida." << endl;
+            break;
+        }
+    }while (opcion != 0);    
 
     return 0;
 }
@@ -53,7 +90,7 @@ void convertirTiempo(int minSegVuelta[][2], int vueltasCargadas, int duracionVue
         minSegVuelta[i][1] = duracionVuelta[i] % 100;
     }
 }
-
+ 
 string obtenerPosicion(int vuelta)
 {
     string posicionVuelta[20];
@@ -97,7 +134,7 @@ void cargarVueltas(int &vueltasCargadas, float &kilometrosVuelta)
     cout << "Se han cargado " << vueltasCargadas << " vueltas de " << kilometrosVuelta << "km." << endl;
 }
 
-void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], bool datosCargados)
+void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], bool &datosCargados)
 {
     if (vueltasCargadas > 0)
     {
@@ -105,6 +142,7 @@ void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas, int minSegVue
         for (int i = 0; i < vueltasCargadas; i++)
         {
             // TODO: no deberia permitir cargar horas > 23 y minutos > 59
+            // mod: cout << "Ingrese la duracion de la vuelta numero " << i << " (MMSS):"
             cout << "Ingrese la duracion de la " << obtenerPosicion(i) << " (MMSS): ";
             cin >> duracionVuelta[i];
         }
@@ -121,7 +159,7 @@ void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas, int minSegVue
     convertirTiempo(minSegVueltas, vueltasCargadas, duracionVuelta);
 }
 
-void bienvenida()
+void imprimirBienvenida()
 {
     cout << endl;
     cout << "******************************************************************************************************" << endl;
@@ -132,57 +170,24 @@ void bienvenida()
     cout << "*******                                                                                        *******" << endl;
     cout << "******************************************************************************************************" << endl;
     cout << endl;
+    return;
 }
 
-void menu(int &vueltasCargadas, int duracionVuelta[], int &vueltaRapida, float &kilometrosVuelta, int minSegVueltas[][2], int &vueltaLenta)
-{
-    int opcion;
-    bool datosCargados = false;
-
-    bienvenida();
-
-    do
-    {
-        cout << endl;
-        cout << "/------------ MENU ---------------\\" << endl;
-        cout << "| 1. Cargar vueltas y kilometraje |" << endl;
-        cout << "| 2. Ingresar datos de vueltas    |" << endl;
-        cout << "| 3. Calcular vuelta mas rapida   |" << endl;
-        cout << "| 4. Calcular vuelta mas lenta    |" << endl;
-        cout << "| 5. Calcular velocidad media     |" << endl;
-        cout << "| 0. Salir                        |" << endl;
-        cout << "\\---------------------------------/" << endl;
-        cout << "Ingrese la opcion: ";
-        cin >> opcion;
-
-        switch (opcion)
-        {
-        case 1:
-            cargarVueltas(vueltasCargadas, kilometrosVuelta);
-            break;
-        case 2:
-            cargarDatosVueltas(duracionVuelta, vueltasCargadas, minSegVueltas, datosCargados);
-            break;
-        case 3:
-            calcularVueltaRapida(duracionVuelta, vueltasCargadas, vueltaRapida, minSegVueltas, datosCargados);
-            break;
-        case 4:
-            calcularVueltaLenta(duracionVuelta, vueltasCargadas, minSegVueltas, vueltaLenta, datosCargados);
-            break;
-        case 5:
-            calcularVelocidadMedia(vueltaRapida, vueltaLenta, kilometrosVuelta);
-            break;
-        case 0:
-            cout << endl;
-            cout << "Que tenga un buen dia!" << endl;
-            system("PAUSE");
-            cout << endl;
-            break;
-        }
-    } while (opcion != 0);
+void imprimirMenu(){
+    cout << endl;
+    cout << "/------------ MENU ---------------\\" << endl;
+    cout << "| 1. Cargar vueltas y kilometraje |" << endl;
+    cout << "| 2. Ingresar datos de vueltas    |" << endl;
+    cout << "| 3. Calcular vuelta mas rapida   |" << endl;
+    cout << "| 4. Calcular vuelta mas lenta    |" << endl;
+    cout << "| 5. Calcular velocidad media     |" << endl;
+    cout << "| 0. Salir                        |" << endl;
+    cout << "\\---------------------------------/" << endl;
+    cout << "Ingrese la opcion: ";
+    return;
 }
 
-void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vueltaRapida, int minSegVueltas[][2], bool datosCargados)
+void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vueltaRapida, int minSegVueltas[][2], bool &datosCargados)
 {
     int posicionVueltaRapida = 0;
 
@@ -207,7 +212,7 @@ void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vuelta
     }
 }
 
-void calcularVueltaLenta(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], int &vueltaLenta, bool datosCargados)
+void calcularVueltaLenta(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], int &vueltaLenta, bool &datosCargados)
 {
     int posicionVueltaLenta = 0;
 
