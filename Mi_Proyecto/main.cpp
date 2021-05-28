@@ -203,7 +203,7 @@ void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vuelta
                 posicionVueltaRapida = i;
             }
         }
-        cout << "La vuelta mas rapida fue la " << obtenerPosicion(posicionVueltaRapida) << " y tuvo una duracion de " << minSegVueltas[posicionVueltaRapida][0] << ":" << minSegVueltas[posicionVueltaRapida][1] << endl;
+        cout << "La vuelta mas rapida fue la " << obtenerPosicion(posicionVueltaRapida) << " y tuvo una duracion de " << minSegVueltas[posicionVueltaRapida][0] << " minutos y " << minSegVueltas[posicionVueltaRapida][1] << " segundos." << endl;
     }
     else
     {
