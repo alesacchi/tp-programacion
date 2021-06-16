@@ -1,13 +1,12 @@
 #include <iostream>
 #include <stdio.h>
+#include "include/info.h"
+#include "include/pedirInput.h"
+
 using namespace std;
 #define NUM_VUELTAS 20
 
 #pragma region FirmaFunciones
-void imprimirBienvenida();
-void imprimirMenu();
-void leer(string mensaje, int &valor);
-void leer(string mensaje, float &valor);
 void convertirTiempo(int minSegVuelta[][2], int vueltasCargadas, int duracionVuelta[]);
 string obtenerPosicion(int vuelta);
 void cargarVueltas(int &vueltasCargadas, float &kilometrosVuelta);
@@ -32,9 +31,7 @@ int main()
 
     do
     {
-        imprimirMenu();
-
-        cin >> opcion;
+        opcion = imprimirMenu();
 
         switch (opcion)
         {
@@ -54,33 +51,18 @@ int main()
             calcularVelocidadMedia(vueltaRapida, vueltaLenta, kilometrosVuelta);
             break;
         case 0:
-            cout << endl;
-            cout << "Que tenga un buen dia!" << endl;
-            system("PAUSE");
-            cout << endl;
+            imprimirFinDelPrograma();
             break;
         default:
             cout << "Opcion incorrecta. Ingrese una opcion valida." << endl;
             break;
         }
-    }while (opcion != 0);    
+    } while (opcion != 0);
 
     return 0;
 }
 
 #pragma region Funciones
-void leer(string mensaje, int &valor)
-{
-    cout << mensaje;
-    cin >> valor;
-}
-
-void leer(string mensaje, float &valor)
-{
-    cout << mensaje;
-    cin >> valor;
-}
-
 void convertirTiempo(int minSegVuelta[][2], int vueltasCargadas, int duracionVuelta[])
 {
     //En la columna 0 guardo los minutos y en la columna 1 guardo los segundos
@@ -90,7 +72,7 @@ void convertirTiempo(int minSegVuelta[][2], int vueltasCargadas, int duracionVue
         minSegVuelta[i][1] = duracionVuelta[i] % 100;
     }
 }
- 
+
 string obtenerPosicion(int vuelta)
 {
     string posicionVuelta[20];
@@ -159,34 +141,6 @@ void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas, int minSegVue
     convertirTiempo(minSegVueltas, vueltasCargadas, duracionVuelta);
 }
 
-void imprimirBienvenida()
-{
-    cout << endl;
-    cout << "******************************************************************************************************" << endl;
-    cout << "*******                                                                                        *******" << endl;
-    cout << "**** TSS - Laboratorio de Programacion I                                                          ****" << endl;
-    cout << "**** Trabajo Practico - Ciclista                                                                  ****" << endl;
-    cout << "****                               Karen Kunz, Nahuel Medice, Facundo Minicucci, Alejandro Sacchi ****" << endl;
-    cout << "*******                                                                                        *******" << endl;
-    cout << "******************************************************************************************************" << endl;
-    cout << endl;
-    return;
-}
-
-void imprimirMenu(){
-    cout << endl;
-    cout << "/------------ MENU ---------------\\" << endl;
-    cout << "| 1. Cargar vueltas y kilometraje |" << endl;
-    cout << "| 2. Ingresar datos de vueltas    |" << endl;
-    cout << "| 3. Calcular vuelta mas rapida   |" << endl;
-    cout << "| 4. Calcular vuelta mas lenta    |" << endl;
-    cout << "| 5. Calcular velocidad media     |" << endl;
-    cout << "| 0. Salir                        |" << endl;
-    cout << "\\---------------------------------/" << endl;
-    cout << "Ingrese la opcion: ";
-    return;
-}
-
 void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vueltaRapida, int minSegVueltas[][2], bool &datosCargados)
 {
     int posicionVueltaRapida = 0;
@@ -250,6 +204,8 @@ void calcularVelocidadMedia(int vueltaRapida, int vueltaLenta, float kilometrosV
         float tiempoLenta = (minutosLenta * 60) + segundosLenta;
         float metros = kilometrosVuelta * 1000;
 
+        //TODO: si solo se carga 1 vuelta o los tiempos tiempoLenta y tiempoRapida son iguales,
+        // queda división por 0. Agregar validación.
         float velocidadMedia = metros / (tiempoLenta - tiempoRapida);
 
         cout << "La velocidad media fue de " << velocidadMedia << " m/s." << endl;
