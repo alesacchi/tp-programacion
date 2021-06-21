@@ -4,6 +4,7 @@
 #include "include/pedirInput.h"
 
 using namespace std;
+
 #define NUM_VUELTAS 20
 
 #pragma region FirmaFunciones
@@ -106,7 +107,7 @@ void cargarVueltas(int &vueltasCargadas, float &kilometrosVuelta)
     do
     {
         leer("Ingrese el numero de vueltas: ", vueltasCargadas);
-    } while (vueltasCargadas < 1);
+    } while (vueltasCargadas < 1 || vueltasCargadas > NUM_VUELTAS);
 
     do
     {
