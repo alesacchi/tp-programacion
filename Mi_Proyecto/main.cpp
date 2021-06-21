@@ -22,6 +22,7 @@ void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas, int minSegVue
 void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vueltaRapida, int minSegVueltas[][2], bool &datosCargados);
 void calcularVueltaLenta(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], int &vueltaLenta, bool &datosCargados);
 void calcularVelocidadMedia(int vueltaRapida, int vueltaLenta, float kilometrosVuelta);
+void calcularReduccionEntrePeorYMejorTiempo(float vueltaRapida, float vueltaLenta);
 #pragma endregion
 
 int main()
@@ -56,7 +57,14 @@ int main()
             calcularVueltaLenta(duracionVuelta, vueltasCargadas, minSegVuelta, vueltaLenta, datosCargados);
             break;
         case 5:
-            calcularVelocidadMedia(vueltaRapida, vueltaLenta, kilometrosVuelta);
+            if (vueltasCargadas > 1)
+            {
+                calcularReduccionEntrePeorYMejorTiempo(vueltaRapida, vueltaLenta);
+            }
+            else
+            {
+                cout << "Solo se cargo una vuelta. No es posible calcular la reduccion de tiempo entre el peor y mejor tiempo." << endl;
+            }
             break;
         case 0:
             imprimirFinDelPrograma();
@@ -197,5 +205,11 @@ void calcularVelocidadMedia(int vueltaRapida, int vueltaLenta, float kilometrosV
         cout << endl;
         cout << "No has calculado las vueltas rapida y lenta" << endl;
     }
+}
+
+void calcularReduccionEntrePeorYMejorTiempo(float vueltaRapida, float vueltaLenta)
+{
+    float porcentaje = 100 - ((vueltaRapida / vueltaLenta) * 100);
+    cout << "Porcentaje de reduccion de tiempo entre el peor y mejor tiempo: " << porcentaje << "%" << endl;
 }
 #pragma endregion
