@@ -7,9 +7,16 @@ using namespace std;
 
 #define NUM_VUELTAS 20
 
+struct Vuelta
+{
+    int orden;
+    int tiempo;
+    int fecha;
+    float velocidadMedia;
+};
+
 #pragma region FirmaFunciones
 void convertirTiempo(int minSegVuelta[][2], int vueltasCargadas, int duracionVuelta[]);
-string obtenerPosicion(int vuelta);
 void cargarVueltas(int &vueltasCargadas, float &kilometrosVuelta);
 void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], bool &datosCargados);
 void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vueltaRapida, int minSegVueltas[][2], bool &datosCargados);
@@ -74,33 +81,6 @@ void convertirTiempo(int minSegVuelta[][2], int vueltasCargadas, int duracionVue
     }
 }
 
-string obtenerPosicion(int vuelta)
-{
-    string posicionVuelta[20];
-    posicionVuelta[0] = "primera vuelta";
-    posicionVuelta[1] = "segunda vuelta";
-    posicionVuelta[2] = "tercer vuelta";
-    posicionVuelta[3] = "cuarta vuelta";
-    posicionVuelta[4] = "quinta vuelta";
-    posicionVuelta[5] = "sexta vuelta";
-    posicionVuelta[6] = "septima vuelta";
-    posicionVuelta[7] = "octava vuelta";
-    posicionVuelta[8] = "novena vuelta";
-    posicionVuelta[9] = "decima vuelta";
-    posicionVuelta[10] = "undecima vuelta";
-    posicionVuelta[11] = "duodecima vuelta";
-    posicionVuelta[12] = "decimotercer vuelta";
-    posicionVuelta[13] = "decimocuarta vuelta";
-    posicionVuelta[14] = "decimoquinta vuelta";
-    posicionVuelta[15] = "decimosexta vuelta";
-    posicionVuelta[16] = "decimoseptima vuelta";
-    posicionVuelta[17] = "decimoctava vuelta";
-    posicionVuelta[18] = "decimonovena vuelta";
-    posicionVuelta[19] = "vigesima vuelta";
-
-    return posicionVuelta[vuelta];
-}
-
 void cargarVueltas(int &vueltasCargadas, float &kilometrosVuelta)
 {
     cout << endl;
@@ -114,6 +94,7 @@ void cargarVueltas(int &vueltasCargadas, float &kilometrosVuelta)
         leer("Ingrese los kilometros de la vuelta: ", kilometrosVuelta);
     } while (kilometrosVuelta < 1);
 
+    cout << endl;
     cout << "Se han cargado " << vueltasCargadas << " vueltas de " << kilometrosVuelta << "km." << endl;
 }
 
@@ -126,7 +107,7 @@ void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas, int minSegVue
         {
             // TODO: no deberia permitir cargar horas > 23 y minutos > 59
             // mod: cout << "Ingrese la duracion de la vuelta numero " << i << " (MMSS):"
-            cout << "Ingrese la duracion de la " << obtenerPosicion(i) << " (MMSS): ";
+            cout << "Ingrese la duracion de la vuelta nro " << i + 1 << " (MMSS): ";
             cin >> duracionVuelta[i];
         }
 
@@ -158,7 +139,7 @@ void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vuelta
                 posicionVueltaRapida = i;
             }
         }
-        cout << "La vuelta mas rapida fue la " << obtenerPosicion(posicionVueltaRapida) << " y tuvo una duracion de " << minSegVueltas[posicionVueltaRapida][0] << " minutos y " << minSegVueltas[posicionVueltaRapida][1] << " segundos." << endl;
+        cout << "La vuelta mas rapida fue la nro " << posicionVueltaRapida + 1 << " y tuvo una duracion de " << minSegVueltas[posicionVueltaRapida][0] << " minutos y " << minSegVueltas[posicionVueltaRapida][1] << " segundos." << endl;
     }
     else
     {
@@ -183,7 +164,7 @@ void calcularVueltaLenta(int duracionVuelta[], int vueltasCargadas, int minSegVu
                 posicionVueltaLenta = i;
             }
         }
-        cout << "La vuelta mas lenta fue la " << obtenerPosicion(posicionVueltaLenta) << " y tuvo una duracion de " << minSegVueltas[posicionVueltaLenta][0] << " minutos y " << minSegVueltas[posicionVueltaLenta][1] << " segundos." << endl;
+        cout << "La vuelta mas lenta fue la nro " << posicionVueltaLenta + 1 << " y tuvo una duracion de " << minSegVueltas[posicionVueltaLenta][0] << " minutos y " << minSegVueltas[posicionVueltaLenta][1] << " segundos." << endl;
     }
     else
     {

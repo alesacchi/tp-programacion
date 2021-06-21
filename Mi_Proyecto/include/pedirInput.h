@@ -5,3 +5,4 @@ using namespace std;
 
 void leer(string mensaje, int &valor);
 void leer(string mensaje, float &valor);
+int imprimirMenu();
