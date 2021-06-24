@@ -19,10 +19,12 @@ struct Vuelta
 void convertirTiempo(int minSegVuelta[][2], int vueltasCargadas, int duracionVuelta[]);
 void cargarVueltas(int &vueltasCargadas, float &kilometrosVuelta);
 void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], bool &datosCargados);
-void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vueltaRapida, int minSegVueltas[][2], bool &datosCargados);
-void calcularVueltaLenta(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], int &vueltaLenta, bool &datosCargados);
+float obtenerTiempoVueltaRapida(int duracionVuelta[], int vueltasCargadas);
+float obtenerTiempoVueltaLenta(int duracionVuelta[], int vueltasCargadas);
+void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], bool datosCargados);
+void calcularVueltaLenta(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], bool datosCargados);
 void calcularVelocidadMedia(int vueltaRapida, int vueltaLenta, float kilometrosVuelta);
-void calcularReduccionEntrePeorYMejorTiempo(float vueltaRapida, float vueltaLenta);
+void informarReduccionEntrePeorYMejorTiempo(int duracionVuelta[], int vueltasCargadas, bool datosCargados);
 #pragma endregion
 
 int main()
@@ -30,8 +32,6 @@ int main()
     int vueltasCargadas = 0;
     float kilometrosVuelta = 0;
     int duracionVuelta[NUM_VUELTAS] = {0};
-    int vueltaRapida = 0;
-    int vueltaLenta = 0;
     int minSegVuelta[NUM_VUELTAS][2] = {0};
     int opcion;
     bool datosCargados = false;
@@ -51,20 +51,13 @@ int main()
             cargarDatosVueltas(duracionVuelta, vueltasCargadas, minSegVuelta, datosCargados);
             break;
         case 3:
-            calcularVueltaRapida(duracionVuelta, vueltasCargadas, vueltaRapida, minSegVuelta, datosCargados);
+            calcularVueltaRapida(duracionVuelta, vueltasCargadas, minSegVuelta, datosCargados);
             break;
         case 4:
-            calcularVueltaLenta(duracionVuelta, vueltasCargadas, minSegVuelta, vueltaLenta, datosCargados);
+            calcularVueltaLenta(duracionVuelta, vueltasCargadas, minSegVuelta, datosCargados);
             break;
         case 5:
-            if (vueltasCargadas > 1)
-            {
-                calcularReduccionEntrePeorYMejorTiempo(vueltaRapida, vueltaLenta);
-            }
-            else
-            {
-                cout << "Solo se cargo una vuelta. No es posible calcular la reduccion de tiempo entre el peor y mejor tiempo." << endl;
-            }
+            informarReduccionEntrePeorYMejorTiempo(duracionVuelta, vueltasCargadas, datosCargados);
             break;
         case 0:
             imprimirFinDelPrograma();
@@ -131,11 +124,11 @@ void cargarDatosVueltas(int duracionVuelta[], int vueltasCargadas, int minSegVue
     convertirTiempo(minSegVueltas, vueltasCargadas, duracionVuelta);
 }
 
-void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vueltaRapida, int minSegVueltas[][2], bool &datosCargados)
+void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], bool datosCargados)
 {
-    int posicionVueltaRapida = 0;
+    int vueltaRapida, posicionVueltaRapida = 0;
 
-    if (vueltasCargadas > 0 && datosCargados == true)
+    if (datosCargados)
     {
         vueltaRapida = duracionVuelta[0];
 
@@ -156,11 +149,11 @@ void calcularVueltaRapida(int duracionVuelta[], int vueltasCargadas, int &vuelta
     }
 }
 
-void calcularVueltaLenta(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], int &vueltaLenta, bool &datosCargados)
+void calcularVueltaLenta(int duracionVuelta[], int vueltasCargadas, int minSegVueltas[][2], bool datosCargados)
 {
-    int posicionVueltaLenta = 0;
+    int vueltaLenta, posicionVueltaLenta = 0;
 
-    if (vueltasCargadas > 0 && datosCargados == true)
+    if (datosCargados)
     {
         vueltaLenta = duracionVuelta[0];
 
@@ -207,9 +200,56 @@ void calcularVelocidadMedia(int vueltaRapida, int vueltaLenta, float kilometrosV
     }
 }
 
-void calcularReduccionEntrePeorYMejorTiempo(float vueltaRapida, float vueltaLenta)
+float obtenerTiempoVueltaRapida(int duracionVuelta[], int vueltasCargadas)
 {
-    float porcentaje = 100 - ((vueltaRapida / vueltaLenta) * 100);
-    cout << "Porcentaje de reduccion de tiempo entre el peor y mejor tiempo: " << porcentaje << "%" << endl;
+    float tiempoVueltaRapida;
+
+    tiempoVueltaRapida = duracionVuelta[0];
+
+    for (int i = 0; i < vueltasCargadas; i++)
+    {
+        if (duracionVuelta[i] < tiempoVueltaRapida)
+        {
+            tiempoVueltaRapida = duracionVuelta[i];
+        }
+    }
+
+    return tiempoVueltaRapida;
+}
+
+float obtenerTiempoVueltaLenta(int duracionVuelta[], int vueltasCargadas)
+{
+    float tiempoVueltaLenta;
+
+    tiempoVueltaLenta = duracionVuelta[0];
+
+    for (int i = 0; i < vueltasCargadas; i++)
+    {
+        if (duracionVuelta[i] > tiempoVueltaLenta)
+        {
+            tiempoVueltaLenta = duracionVuelta[i];
+        }
+    }
+
+    return tiempoVueltaLenta;
+}
+
+void informarReduccionEntrePeorYMejorTiempo(int duracionVuelta[], int vueltasCargadas, bool hayDatos)
+{
+    cout << endl;
+
+    if (!hayDatos)
+    {
+        cout << "No hay datos cargados." << endl;
+    }
+    else if (vueltasCargadas == 1)
+    {
+        cout << "Solo se cargo una vuelta. No es posible calcular la reduccion de tiempo entre el peor y mejor tiempo." << endl;
+    }
+    else
+    {
+        float porcentaje = 100 - ((obtenerTiempoVueltaRapida(duracionVuelta, vueltasCargadas) / obtenerTiempoVueltaLenta(duracionVuelta, vueltasCargadas)) * 100);
+        cout << "Porcentaje de reduccion de tiempo entre el peor y mejor tiempo: " << porcentaje << "%" << endl;
+    }
 }
 #pragma endregion
