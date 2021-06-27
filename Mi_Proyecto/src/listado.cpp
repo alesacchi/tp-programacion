@@ -66,7 +66,6 @@ void listadoVueltasCargadas(Vuelta vueltas[], int cantVueltas)
             int mes = vueltas[i].fecha / 100;
             int dia = vueltas[i].fecha - (mes * 100);
 
-            // TODO: ver si son km por minuto o por segundo
             cout << "\t\t" << dia << "/" << mes << "\t" << min << "\t" << seg << "\t\t" << vueltas[i].velocidad << " km/m" << endl;
         }
     }

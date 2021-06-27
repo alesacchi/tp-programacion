@@ -97,7 +97,7 @@ void cargarVueltas(Vuelta vueltas[], int &cantVueltas, float &km, bool &hayDatos
         vuelta.fecha = (mes * 100) + dia;
 
         vuelta.tiempo = ingresarTiempo();
-        vuelta.velocidad = km / vuelta.tiempo;
+        vuelta.velocidad = km / (vuelta.tiempo / 100);
 
         vueltas[cantVueltas] = vuelta;
 
