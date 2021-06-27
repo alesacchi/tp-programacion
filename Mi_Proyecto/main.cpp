@@ -11,7 +11,6 @@ using namespace std;
 #define CANT_MAX_VUELTAS 30 // 1 mes
 
 #pragma region FirmaFunciones
-void convertirTiempo(int minSegVuelta[][2], int vueltasCargadas, int duracionVuelta[]);
 void cargarVueltas(Vuelta vueltas[], int &cantVueltas, float &kilometrosVuelta, bool &datosCargados);
 void ordenarVueltas(Vuelta vueltas[], int cantVueltas);
 #pragma endregion
@@ -21,8 +20,6 @@ int main()
     int vueltasCargadas = 0, opcion;
     float kilometrosVuelta = 0;
     Vuelta vueltas[CANT_MAX_VUELTAS];
-    int duracionVuelta[CANT_MAX_VUELTAS] = {0};
-    int minSegVuelta[CANT_MAX_VUELTAS][2] = {0};
     bool datosCargados = false;
 
     imprimirBienvenida();
@@ -68,15 +65,6 @@ int main()
 }
 
 #pragma region Funciones
-void convertirTiempo(int minSegVuelta[][2], int vueltasCargadas, int duracionVuelta[])
-{
-    //En la columna 0 guardo los minutos y en la columna 1 guardo los segundos
-    for (int i = 0; i < vueltasCargadas; i++)
-    {
-        minSegVuelta[i][0] = duracionVuelta[i] / 100;
-        minSegVuelta[i][1] = duracionVuelta[i] % 100;
-    }
-}
 
 void cargarVueltas(Vuelta vueltas[], int &cantVueltas, float &km, bool &hayDatos)
 {
