@@ -26,6 +26,9 @@ void informarVueltaRapida(Vuelta vueltas[], int cantVueltas)
     {
         cout << "No hay datos cargados." << endl;
     }
+
+    cout << endl;
+    system("PAUSE");
 }
 
 void informarVueltaLenta(Vuelta vueltas[], int cantVueltas)
@@ -48,6 +51,9 @@ void informarVueltaLenta(Vuelta vueltas[], int cantVueltas)
     {
         cout << "No hay datos cargados." << endl;
     }
+
+    cout << endl;
+    system("PAUSE");
 }
 
 void listadoVueltasCargadas(Vuelta vueltas[], int cantVueltas)
@@ -73,6 +79,9 @@ void listadoVueltasCargadas(Vuelta vueltas[], int cantVueltas)
     {
         cout << "No es posible generar el listado. No hay datos cargados." << endl;
     }
+
+    cout << endl;
+    system("PAUSE");
 }
 
 void informarReduccionEntrePeorYMejorTiempo(Vuelta vueltas[], int cantVueltas, bool hayDatos)
@@ -92,6 +101,9 @@ void informarReduccionEntrePeorYMejorTiempo(Vuelta vueltas[], int cantVueltas, b
         float porcentaje = 100 - ((obtenerVueltaRapida(vueltas, cantVueltas).tiempo / obtenerVueltaLenta(vueltas, cantVueltas).tiempo) * 100);
         cout << "Porcentaje de reduccion de tiempo entre el peor y mejor tiempo: " << porcentaje << "%" << endl;
     }
+
+    cout << endl;
+    system("PAUSE");
 }
 
 void listadoVueltasSuperiorAVelocidadMedia(Vuelta vueltas[], int cantVueltas, bool hayDatos)
@@ -122,4 +134,5 @@ void listadoVueltasSuperiorAVelocidadMedia(Vuelta vueltas[], int cantVueltas, bo
     }
 
     cout << endl;
+    system("PAUSE");
 }
